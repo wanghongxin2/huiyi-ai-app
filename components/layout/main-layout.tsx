@@ -2,16 +2,13 @@
 
 import React from "react"
 import { useState } from "react"
-import dynamic from "next/dynamic"
+import { Sidebar } from "./sidebar"
 import { cn } from "@/lib/utils"
 import { useMobile } from "@/hooks/use-mobile"
+import LanguageSwitcher from "@/components/language-switcher"
 import { Dialog, DialogContent, DialogHeader, DialogFooter, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
-
-// 动态导入组件，禁用SSR
-const Sidebar = dynamic(() => import("./sidebar").then(mod => mod.Sidebar), { ssr: false })
-const LanguageSwitcher = dynamic(() => import("@/components/language-switcher"), { ssr: false })
 
 interface MainLayoutProps {
   children: React.ReactNode

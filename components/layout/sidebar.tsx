@@ -30,9 +30,9 @@ export function Sidebar({ isOpen, onToggle, isMobile = false,onUserSettings }: S
           variant="ghost"
           size="sm"
           onClick={onToggle}
-          className="border bg-white/90 border-gray-200 shadow-lg top-6 left-6 text-gray-700 z-50 fixed backdrop-blur-md hover:bg-white"
+          className="fixed top-6 left-6 z-50 bg-white/90 backdrop-blur-md border border-gray-200 shadow-lg hover:bg-white text-gray-700"
         >
-          <Menu className="h-5 w-5" />
+          <Menu className="w-5 h-5" />
         </Button>
       )}
 
@@ -51,20 +51,20 @@ export function Sidebar({ isOpen, onToggle, isMobile = false,onUserSettings }: S
         {/* Header */}
         <div className={cn("flex items-center p-6", !isOpen && !isMobile && "justify-between")}>
           <div className={cn("flex items-center space-x-3", !isOpen && !isMobile && "flex-col space-x-0 space-y-2")}>
-            <div className="bg-gradient-to-r rounded-xl flex from-purple-500 to-blue-500 h-10 shadow-lg w-10 items-center justify-center">
-              <Brain className="h-6 text-white w-6" />
+            <div className="w-10 h-10 bg-gradient-to-r from-purple-500 to-blue-500 rounded-xl flex items-center justify-center shadow-lg">
+              <Brain className="w-6 h-6 text-white" />
             </div>
-            {(isOpen || isMobile) && <h1 className="font-bold text-2xl text-gray-800">慧翼</h1>}
-            {!isOpen && !isMobile && <span className="font-medium text-xs text-center text-gray-700">慧翼</span>}
+            {(isOpen || isMobile) && <h1 className="text-2xl font-bold text-gray-800">慧翼</h1>}
+            {!isOpen && !isMobile && <span className="text-xs font-medium text-gray-700 text-center">慧翼</span>}
           </div>
           {(isOpen || isMobile) && (
             <Button
               variant="ghost"
               size="sm"
               onClick={onToggle}
-              className="ml-auto text-gray-600 hover:bg-gray-100 hover:text-gray-800"
+              className="ml-auto text-gray-600 hover:text-gray-800 hover:bg-gray-100"
             >
-              {isMobile ? <X className="h-5 w-5" /> : <ChevronLeft className="h-5 w-5" />}
+              {isMobile ? <X className="w-5 h-5" /> : <ChevronLeft className="w-5 h-5" />}
             </Button>
           )}
           {!isOpen && !isMobile && (
@@ -72,15 +72,15 @@ export function Sidebar({ isOpen, onToggle, isMobile = false,onUserSettings }: S
               variant="ghost"
               size="sm"
               onClick={onToggle}
-              className="border rounded-lg border-gray-200 h-8 shadow-sm ml-2 text-gray-600 w-8 hover:bg-gray-100 hover:text-gray-800"
+              className="ml-2 text-gray-600 hover:text-gray-800 hover:bg-gray-100 w-8 h-8 rounded-lg border border-gray-200 shadow-sm"
             >
-              <Menu className="h-4 w-4" />
+              <Menu className="w-4 h-4" />
             </Button>
           )}
         </div>
 
         {/* Navigation */}
-        <nav className="space-y-3 flex-1 px-4">
+        <nav className="flex-1 px-4 space-y-3">
           {navigation.map((item) => {
             const isActive = pathname === item.href
             return (
@@ -112,7 +112,7 @@ export function Sidebar({ isOpen, onToggle, isMobile = false,onUserSettings }: S
         </nav>
 
         {/* User Profile - Fixed at bottom */}
-        <div className="border-t mt-auto border-gray-200/50 p-4">
+        <div className="p-4 mt-auto border-t border-gray-200/50">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
@@ -132,29 +132,29 @@ export function Sidebar({ isOpen, onToggle, isMobile = false,onUserSettings }: S
                 </Avatar>
                 {(isOpen || isMobile) && (
                   <div className="flex-1 text-left">
-                    <p className="font-medium text-sm text-gray-800">用户名</p>
+                    <p className="text-sm font-medium text-gray-800">用户名</p>
                     <p className="text-xs text-gray-500">user@example.com</p>
                   </div>
                 )}
                 {!isOpen && !isMobile && (
                   <div className="text-center">
-                    <p className="font-medium text-xs leading-tight text-gray-700">用户</p>
+                    <p className="text-xs font-medium leading-tight text-gray-700">用户</p>
                   </div>
                 )}
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-white/95 border-gray-200 w-56 backdrop-blur-xl">
+            <DropdownMenuContent align="end" className="w-56 bg-white/95 backdrop-blur-xl border-gray-200">
             <DropdownMenuItem
               className="hover:bg-gray-50"
               onClick={() => {
                 if (onUserSettings) onUserSettings();
               }}
             >
-              <Settings className="h-4 mr-2 w-4" />
+              <Settings className="w-4 h-4 mr-2" />
               用户设置
             </DropdownMenuItem>
               <DropdownMenuItem className="text-red-600 hover:bg-red-50">
-                <LogOut className="h-4 mr-2 w-4" />
+                <LogOut className="w-4 h-4 mr-2" />
                 退出登录
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -164,5 +164,3 @@ export function Sidebar({ isOpen, onToggle, isMobile = false,onUserSettings }: S
     </>
   )
 }
-
-export default Sidebar;
