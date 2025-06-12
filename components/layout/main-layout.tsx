@@ -2,13 +2,16 @@
 
 import React from "react"
 import { useState } from "react"
-import { Sidebar } from "./sidebar"
+import dynamic from "next/dynamic"
 import { cn } from "@/lib/utils"
 import { useMobile } from "@/hooks/use-mobile"
-import LanguageSwitcher from "@/components/language-switcher"
 import { Dialog, DialogContent, DialogHeader, DialogFooter, DialogTitle } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+
+// 动态导入组件，禁用SSR
+const Sidebar = dynamic(() => import("./sidebar").then(mod => mod.Sidebar), { ssr: false })
+const LanguageSwitcher = dynamic(() => import("@/components/language-switcher"), { ssr: false })
 
 interface MainLayoutProps {
   children: React.ReactNode
@@ -51,12 +54,12 @@ export function MainLayout({ children }: MainLayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-100 via-blue-100 to-indigo-200 relative">
+    <div className="bg-gradient-to-br min-h-screen from-purple-100 via-blue-100 to-indigo-200 relative">
       {/* 背景装饰层 */}
-      <div className="absolute inset-0">
-        <div className="absolute top-20 left-1/3 w-96 h-96 bg-purple-300/20 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-1/3 w-96 h-96 bg-blue-300/20 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[600px] bg-gradient-to-r from-purple-200/10 to-blue-200/10 rounded-full blur-3xl" />
+      <div className="inset-0 absolute">
+        <div className="rounded-full bg-purple-300/20 h-96 top-20 left-1/3 w-96 absolute blur-3xl" />
+        <div className="rounded-full bg-blue-300/20 h-96 right-1/3 bottom-20 w-96 absolute blur-3xl" />
+        <div className="bg-gradient-to-r rounded-full from-purple-200/10 to-blue-200/10 h-[600px] transform top-1/2 left-1/2 w-[800px] -translate-x-1/2 -translate-y-1/2 absolute blur-3xl" />
       </div>
 
       {/* 左侧菜单栏 - 浅灰白色背景，深色文字 */}
@@ -64,11 +67,11 @@ export function MainLayout({ children }: MainLayoutProps) {
 
       {/* 移动端遮罩层 */}
       {isMobile && sidebarOpen && (
-        <div className="fixed inset-0 bg-black/20 z-30" onClick={() => setSidebarOpen(false)} />
+        <div className="bg-black/20 inset-0 z-30 fixed" onClick={() => setSidebarOpen(false)} />
       )}
 
       {/* 语言切换器 - 固定在右上角 */}
-      <div className="fixed top-4 right-4 z-50">
+      <div className="top-4 right-4 z-50 fixed">
         <LanguageSwitcher />
       </div>
 
@@ -80,8 +83,8 @@ export function MainLayout({ children }: MainLayoutProps) {
         )}
       >
         {/* 最小边距，最大化悬浮面板 */}
-        <div className="p-2 h-full">
-          <div className="bg-white/95 backdrop-blur-xl rounded-lg shadow-xl border border-white/50 h-full flex flex-col overflow-hidden">
+        <div className="h-full p-2">
+          <div className="border rounded-lg flex flex-col h-full bg-white/95 border-white/50 shadow-xl backdrop-blur-xl overflow-hidden">
             <div className="flex-1 overflow-y-auto scrollbar-hide">{children}</div>
           </div>
         </div>
@@ -94,7 +97,7 @@ export function MainLayout({ children }: MainLayoutProps) {
             <DialogTitle>用户设置</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <label className="block text-sm font-medium">阿里百炼 API Key</label>
+            <label className="font-medium text-sm block">阿里百炼 API Key</label>
             <Input
               type="text"
               value={tempApiKey}
